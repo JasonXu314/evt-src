@@ -1,6 +1,6 @@
 {
-	"name": "@smol-tanks/evt-src",
-	"version": "1.4.0",
+	"name": "@nano-utils/evt-src",
+	"version": "1.0.0",
 	"description": "",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
 		"build": "tsc -b ./tsconfig.json"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Jason Xu",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/jest": "^26.0.24",
@@ -20,5 +20,6 @@
 		"ts-jest": "^27.0.3",
 		"typescript": "^4.3.5"
 	},
+	"private": false,
 	"dependencies": {}
 }
