@@ -7,7 +7,7 @@ export type EventMap = Record<string, any | undefined>;
 
 export type FullEventMap = Record<string, any>;
 
-export type EvtListener<T = undefined> = (...evt: T extends undefined ? [] : [T]) => void;
+export type EvtListener<T = undefined> = (...evt: T extends undefined ? [] : [T]) => any;
 
 export type Unsubscriber = () => void;
 
