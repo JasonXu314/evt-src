@@ -1,7 +1,6 @@
-import { HostEventMap, Key } from '.';
-import { EventMap, EvtListener, HostEventSource, ListenerMap, Unsubscriber } from './types';
+import { EventMap, EvtListener, HostEventMap, HostEventSource, KeyOf, ListenerMap, Unsubscriber } from './types';
 
-export class EventSrc<T extends EventMap<E>, E extends Key = keyof T> {
+export class EventSrc<T extends EventMap<E>, E extends string = KeyOf<T>> {
 	/**
 	 * The listeners registered on this source
 	 */
@@ -20,7 +19,7 @@ export class EventSrc<T extends EventMap<E>, E extends Key = keyof T> {
 	 * @param listener the listener to add
 	 * @returns an unsubscriber, for removing the listener
 	 */
-	public on<E extends keyof T>(event: E, listener: EvtListener<T[E]>): Unsubscriber {
+	public on<E extends KeyOf<T>>(event: E, listener: EvtListener<T[E]>): Unsubscriber {
 		if (!this._listeners[event]) {
 			this._listeners[event] = [];
 		}
@@ -37,7 +36,7 @@ export class EventSrc<T extends EventMap<E>, E extends Key = keyof T> {
 	 * @param event the event to trigger
 	 * @param data the data to pass to the listener (if it accepts data)
 	 */
-	public dispatch<E extends keyof T>(event: E, ...data: T[E]): void {
+	public dispatch<E extends KeyOf<T>>(event: E, ...data: T[E]): void {
 		this._listeners[event].forEach((listener) => listener(...data));
 	}
 
@@ -47,7 +46,7 @@ export class EventSrc<T extends EventMap<E>, E extends Key = keyof T> {
 	 * @param events the events on the underlying source to listen to
 	 * @returns an event source wrapping the given source
 	 */
-	public static wrap<T extends HostEventMap<E>, E extends keyof T = keyof T>(src: HostEventSource<T>, events: E[]): EventSrc<T> {
+	public static wrap<T extends HostEventMap<E>, E extends KeyOf<T> = KeyOf<T>>(src: HostEventSource<T>, events: E[]): EventSrc<T> {
 		const newEvtSrc = new EventSrc<T>();
 
 		events.forEach((eventName) => {

@@ -1,19 +1,19 @@
 export type Primitives = string | number | boolean | symbol | ((...args: any) => any);
-export type EventArg = Primitives | { [key: Key]: EventArg } | EventArg[];
-export type Key = string | number | symbol;
+export type EventArg = Primitives | { [key: string | number | symbol]: EventArg } | EventArg[];
+export type KeyOf<T> = Extract<keyof T, string>;
 
-export interface HostEventSource<T extends HostEventMap<E>, E extends Key = keyof T> {
-	addEventListener<K extends keyof T>(type: K, listener: (...evt: T[K]) => any): void;
-	removeEventListener<K extends keyof T>(type: K, listener: (...evt: T[K]) => any): void;
+export interface HostEventSource<T extends HostEventMap<E>, E extends string = KeyOf<T>> {
+	addEventListener<K extends KeyOf<T>>(type: K, listener: (...evt: T[K]) => any): void;
+	removeEventListener<K extends KeyOf<T>>(type: K, listener: (...evt: T[K]) => any): void;
 }
 
-export type EventMap<E extends Key> = { [K in E]: EventArg[] };
-export type HostEventMap<E extends Key> = Record<E, [EventArg]>;
+export type EventMap<E extends string> = { [K in Extract<E, string>]: EventArg[] };
+export type HostEventMap<E extends string> = { [K in Extract<E, string>]: [EventArg] };
 
 export type EvtListener<T extends EventArg[]> = (...evt: T) => any;
 
 export type Unsubscriber = () => void;
 
-export type ListenerMap<T extends EventMap<E>, E extends Key = keyof T> = {
-	[event in E]: EvtListener<T[event]>[];
+export type ListenerMap<T extends EventMap<E>, E extends string = KeyOf<T>> = {
+	[event in KeyOf<T>]: EvtListener<T[event]>[];
 };

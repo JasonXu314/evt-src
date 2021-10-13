@@ -1,7 +1,7 @@
 {
 	"name": "@nano-utils/evt-src",
-	"version": "1.0.3",
-	"description": "",
+	"version": "1.1.0",
+	"description": "A lightweight event source library inspired by the nanoevents library",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
