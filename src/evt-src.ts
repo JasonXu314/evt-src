@@ -37,7 +37,7 @@ export class EventSrc<T extends EventMap<E>, E extends string = KeyOf<T>> {
 	 * @param data the data to pass to the listener (if it accepts data)
 	 */
 	public dispatch<E extends KeyOf<T>>(event: E, ...data: T[E]): void {
-		this._listeners[event].forEach((listener) => listener(...data));
+		this._listeners[event]?.forEach((listener) => listener(...data));
 	}
 
 	/**
